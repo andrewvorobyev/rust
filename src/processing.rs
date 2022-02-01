@@ -54,6 +54,10 @@ impl Partition {
             .entry(meta.client_id)
             .or_insert_with(|| Account::new());
 
+        if acc.is_frozen() {
+            return;
+        }
+
         match tr {
             Transaction::Deposit { amount: a, .. } => acc.deposit(&a),
             Transaction::Withdrawal { amount: a, .. } => {

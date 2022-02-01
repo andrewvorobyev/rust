@@ -85,6 +85,10 @@ impl Account {
         }
     }
 
+    pub fn is_frozen(&self) -> bool {
+        self.is_locked
+    }
+
     /// Returns available funds.
     pub fn get_available_funds(&self) -> &Decimal {
         &self.available_funds
