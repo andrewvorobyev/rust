@@ -110,6 +110,23 @@ mod tests {
     }
 
     #[test]
+    fn no_ops_after_chargeback() {
+        let input = indoc! {"
+            type,client,tx,amount
+            deposit,1,1,4.0
+            deposit,1,2,3.0
+            dispute,1,2,
+            chargeback,1,2,
+            deposit,1,2,100.0
+        "};
+        let output = indoc! {"
+            client,available,held,total,locked
+            1,4,0,4,true
+        "};
+        check(input, output);
+    }
+
+    #[test]
     fn withdrawal_nonexisting_funds() {
         let input = indoc! {"
             type,client,tx,amount
